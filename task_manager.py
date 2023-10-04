@@ -117,10 +117,39 @@ def read_values_lists():
     return user_usernames, user_passwords
 
 
+# A method which reads in username and password and checks if they correspond
+def corresponding_username_password(username: str, password: str):
+    """
+    Keeps asking user for username and password until they enter a
+    corresponding username and password
+
+    :param username: str, The username input from the user 
+    :param password: str, the password input from the user
+    
+    :return: str, the username, 
+             str, the password
+    """
+    # Password and username correspond with each other
+    username_with_password = False
+    username_list, password_list = read_values_lists()
+    while username_with_password == False:
+        username_index = username_list.index(username)
+        password_index = password_list.index(password)
+        if username_index == password_index:
+            username_with_password = True
+            print(f"\nWelcome {username}")
+        else:
+            print("\nplease enter the correct login details")
+            username = input("Please enter your username: ")
+            username = check_username(username, username_list)
+            password = input("please enter your password: ")
+            password = check_password(password, password_list)
+    return username, password
+
+
 #====Login Section====
 user_usernames = []
 user_passwords = []
-username_with_password = False
 user_usernames, user_passwords = read_values_lists()
 
 current_username = input("Please enter your username: ")
@@ -128,19 +157,9 @@ current_username = check_username(current_username, user_usernames)
 current_password = input("please enter your password: ")
 current_password = check_password(current_password, user_passwords)
 
-# Password and username correspond with each other
-while username_with_password == False:
-    username_index = user_usernames.index(current_username)
-    password_index = user_passwords.index(current_password)
-    if username_index == password_index:
-        username_with_password = True
-        print(f"\nWelcome {current_username}")
-    else:
-        print("\nplease enter the correct login details")
-        current_username = input("Please enter your username: ")
-        current_username = check_username(current_username, user_usernames)
-        current_password = input("please enter your password: ")
-        current_password = check_password(current_password, user_passwords)
+# Checking that the username and password correspond with each other
+current_username, current_password = corresponding_username_password(
+                                        current_username,current_password)
 
 # Will continuously loop through the users menu until the user chooses to exit
 while True:
