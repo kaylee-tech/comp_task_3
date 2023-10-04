@@ -41,7 +41,7 @@ def check_password(password: str, password_list: list):
 # Checks if the username exists and asks the user for new username if so
 def username_exists(username: str, username_list: list):
     """
-    Keeps asking the user to enter a username, until they eneter a new one
+    Keeps asking the user to enter a username, until they enter a new one
 
     :param username: str, The input from the user 
     :param username_list: list, the list of stored usernames
@@ -70,7 +70,7 @@ def password_confirmation(password: str, password_con: str):
     :param password_con: str, the second input from the user
         default?? 
     
-    :return: str, an password tha tthe user entered correctly twice
+    :return: str, a password that the user entered correctly twice
     """
     password_matches = False
     while password_matches == False:
@@ -85,6 +85,15 @@ def password_confirmation(password: str, password_con: str):
 
 # Checks that the user entered exists, if not asks for new existing user
 def task_user_exists(username: str, username_list: list):
+    """
+    Keeps asking the user to enter a username, until they enter an existing one
+
+    :param username: str, The input from the user 
+    :param username_list: list, the list of stored usernames
+        default?? 
+    
+    :return: str, an existing username
+    """
     username_exists = False
     while username_exists == False:
         if username in username_list:
@@ -95,19 +104,24 @@ def task_user_exists(username: str, username_list: list):
     return username
 
 
+# Reads in values from text file and puts them in 2 lists
+def read_values_lists():
+    # Opening the textfile and reading, the usernames and passwords into a list
+    user_file = open("user.txt", "r")
+    lines = user_file.readlines()
+    for line in lines:
+        temp = line.strip().split(", ")
+        user_usernames.append(temp[0])
+        user_passwords.append(temp[1])
+    user_file.close()
+    return user_usernames, user_passwords
+
+
 #====Login Section====
 user_usernames = []
 user_passwords = []
 username_with_password = False
-
-# Opening user textfile and reading in the usernames and passwords into a list
-user_file = open("user.txt", "r")
-lines = user_file.readlines()
-for line in lines:
-    temp = line.strip().split(", ")
-    user_usernames.append(temp[0])
-    user_passwords.append(temp[1])
-user_file.close()
+user_usernames, user_passwords = read_values_lists()
 
 current_username = input("Please enter your username: ")
 current_username = check_username(current_username, user_usernames)
