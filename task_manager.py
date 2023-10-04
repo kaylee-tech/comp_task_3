@@ -106,6 +106,12 @@ def task_user_exists(username: str, username_list: list):
 
 # Reads in values from text file and puts them in 2 lists
 def read_values_lists():
+    """
+    Reads in values from text file and puts them in according lists
+    
+    :return: list, user_usernames, 
+             list, user_passwords
+    """
     # Opening the textfile and reading, the usernames and passwords into a list
     user_file = open("user.txt", "r")
     lines = user_file.readlines()
